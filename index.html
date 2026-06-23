@@ -113,6 +113,14 @@
       <div class="t">Download the PDF</div>
       <div class="d">The whole deck to keep — about 7&nbsp;MB.</div>
     </a>
+
+    <!-- Companion essay. Slug inferred (my-tarot-has-a-type) — verify resolves post-scheduling. -->
+    <a class="card" href="https://feralarchitecture.com/p/my-tarot-has-a-type?utm_source=mysticsouth&amp;utm_medium=talk&amp;utm_campaign=time-as-oracle&amp;utm_content=companion-essay">
+      <span class="arrow">→</span>
+      <div class="k">The essay</div>
+      <div class="t">My Tarot Has a Type</div>
+      <div class="d">The companion piece — I put two and a half years of my own readings to the test.</div>
+    </a>
   </nav>
 
   <footer>
@@ -122,5 +130,23 @@
     <div class="feral">STAY FERAL, FOLKS.</div>
   </footer>
 </main>
+<!-- UTM passthrough: inbound utm_* (e.g. from the FA companion essay, source=substack) override the
+     funnel link's hardcoded talk defaults, so GHL credits the real upstream channel; QR/direct traffic
+     with no inbound UTMs keeps the default source=mysticsouth&medium=talk. -->
+<script>
+(function(){
+  var inbound = new URLSearchParams(window.location.search);
+  var keys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
+  var passed = keys.filter(function(k){ return inbound.has(k); });
+  if(!passed.length) return;
+  document.querySelectorAll('a[href*="mytarotpulse.com/stalker-cards-upgrade"]').forEach(function(a){
+    try{
+      var u = new URL(a.href);
+      passed.forEach(function(k){ u.searchParams.set(k, inbound.get(k)); });
+      a.href = u.toString();
+    }catch(e){}
+  });
+})();
+</script>
 </body>
 </html>
